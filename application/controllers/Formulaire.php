@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 class Formulaire extends CI_Controller {
     public function __construct() 
     {
@@ -9,11 +8,18 @@ class Formulaire extends CI_Controller {
         $this->load->model('users_model');
         $this->load->database();
         $this->load->library('session');
+        $this->load->helper(array('form', 'url'));
     }
+    public function index(){
+        $this->load->view('templates/header');
+    }
+    /**
+     * Donne accès à la page d'inscription et permet d'analyzer le contenu du formulaire pour des sousis de sécurité
+     * 
+     */
     public function inscription()
     {
-        $this->load->helper(array('form', 'url'));
-
+        
         $this->load->library('form_validation');
                 
         $this->form_validation->set_rules('user', 'Utilisateur', 'required|min_length[5]|max_length[15]',
@@ -58,7 +64,6 @@ class Formulaire extends CI_Controller {
     }
     public function connexion()
     {
-        $this->load->helper(array('form', 'url'));
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'required',
@@ -80,15 +85,13 @@ class Formulaire extends CI_Controller {
         }
     }
     public function logout(){
-        $this->load->helper(array('form', 'url'));
+        $_SESSION['co'] = null;
         $this->session->sess_destroy();
         $this->load->view('templates/header');
-        $this->load->view('connexion'); //Redirige la personne au formulaire car une erreur a été trouvé
-
+        $this->load->view('connexion');
     }
     public function reserv()
     {
-        $this->load->helper(array('form', 'url'));
 
         $this->load->library('form_validation');
 
@@ -116,8 +119,36 @@ class Formulaire extends CI_Controller {
         }
     }
     public function listeReserv(){
-        $this->load->helper(array('form', 'url'));
-        $this->load->view('templates/header');
-        $this->load->view('listeReserv');
+        if(isset($_SESSION['id'])){
+            if(($query = $this->reservations_model->list($_SESSION['id']))!=null){
+            foreach($query as $res){
+                $idres[] = $res->idres;
+                $datedebut[] = $res->datedebut;
+                $datefin[] = $res->datefin;
+                $tarif[] = $res->tarif;
+                $etatres[] = $res->etatres;
+                $nbclient[] = $res->nbclient;
+            }
+            $data['null'] = 1;
+            $data['idres'] = $idres;
+            $data['datedebut'] = $datedebut;
+            $data['datefin'] = $datefin;
+            $data['tarif'] = $tarif;
+            $data['etatres'] = $etatres;
+            $data['nbclient'] = $nbclient;
+            $this->load->view('templates/header');
+            $this->load->view('listeReserv',$data);
+            }
+            else{
+                $data['null'] = null;
+                $this->load->view('templates/header');
+                $this->load->view('listeReserv',$data);
+            }
+        }
+        else{
+            $this->load->view('templates/header');
+            $this->load->view('listeReserv');
+        }
+
     }
 }

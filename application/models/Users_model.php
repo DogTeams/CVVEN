@@ -30,11 +30,7 @@ class users_model extends CI_Model {
     }
     public function connexion(){
         $query = $this->db->query('SELECT * FROM client WHERE  mdp=? AND courriel =?', array(md5($_POST['mdp']), $_POST['email']));
-        /*if($query){
-            $this->session;
-            $_SESSION['id']= $query->result();
-        }*/
-        if(isset($query)){
+        if($query->result()!=null){
             $this->session;
             $this->session->userdata();
             foreach($query->result() as $row){
@@ -46,14 +42,6 @@ class users_model extends CI_Model {
                 
             }
             $this->session->set_userdata('co', true);
-            $r= $this->db->query('SELECT * FROM reservation WHERE idclient=?', array($_SESSION['id']));
-            $i=0;
-            foreach($r->result() as $row){
-                echo($row->datedebut + ' ' + $row->datefin + ' ' + $row->etatres + ' ' + $row->nbclient);
-                
-                $i++;
-            }
-            $this->session->set_userdata('reserv',$tab);
         }
     }
 }
