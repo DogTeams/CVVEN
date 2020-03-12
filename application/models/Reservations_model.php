@@ -22,6 +22,9 @@ class reservations_model extends CI_Model {
     public function date($datedebut){
         return date( "Y-m-d", strtotime( $datedebut." +7 days" ));
     }
+    public function annulation(){
+        $this->db->delete('reservation', array('idres' => $_POST['id']));
+    }
 }
 
 

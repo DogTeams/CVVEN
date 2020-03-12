@@ -42,7 +42,7 @@
             else{
             ?>
             <li class="nav-item active">
-                <a href="#" class="nav-link">Mon Compte</a>
+                <a href="/codeigniter/index.php/Formulaire/users" class="nav-link">Mon Compte</a>
             </li>
             <li class="nav-item active">
                 <a href="/codeigniter/index.php/Formulaire/logout" class="nav-link">Logout</a>

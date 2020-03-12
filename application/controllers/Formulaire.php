@@ -79,9 +79,19 @@ class Formulaire extends CI_Controller {
         }
         else
         {
-            $this->users_model->connexion();
-            $this->load->view('templates/header');
-            $this->load->view('test'); //redirige la personne a la page suivante une fois le formulaire rempli correctement
+            $verif = $this->users_model->connexion();
+            if($verif){
+                $this->load->view('templates/header');
+                $this->load->view('test');
+            }
+            if(!$verif){
+                $data['error'] = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Erreur</strong> Identifiants incorrecte. email ou/et mot de passe</div>';
+                $this->load->view('templates/header');
+                $this->load->view('connexion',$data);
+                
+            }
+             
         }
     }
     public function logout(){
@@ -89,6 +99,10 @@ class Formulaire extends CI_Controller {
         $this->session->sess_destroy();
         $this->load->view('templates/header');
         $this->load->view('connexion');
+    }
+    public function annulation(){
+        $this->reservations_model->annulation($_SESSION['id']);
+        $this->listeReserv();
     }
     public function reserv()
     {
@@ -129,7 +143,6 @@ class Formulaire extends CI_Controller {
                 $etatres[] = $res->etatres;
                 $nbclient[] = $res->nbclient;
             }
-            $data['null'] = 1;
             $data['idres'] = $idres;
             $data['datedebut'] = $datedebut;
             $data['datefin'] = $datefin;
@@ -140,7 +153,6 @@ class Formulaire extends CI_Controller {
             $this->load->view('listeReserv',$data);
             }
             else{
-                $data['null'] = null;
                 $this->load->view('templates/header');
                 $this->load->view('listeReserv',$data);
             }
@@ -150,5 +162,72 @@ class Formulaire extends CI_Controller {
             $this->load->view('listeReserv');
         }
 
+    }
+    public function users(){
+        if(isset($_SESSION['id'])){
+            if(($query = $this->users_model->getInfo($_SESSION['id']))!=null){
+            foreach($query as $res){
+                $idclient = $res->idclient;
+                $identifiant = $res->identifiant;
+                $nom = $res->nom;
+                $prenom = $res->prenom;
+                $courriel = $res->courriel;
+                $Ville = $res->Ville;
+                $codepostal = $res->codepostal;
+                $telephone = $res->telephone;
+            }
+            $data['idclient'] = $idclient;
+            $data['identifiant'] = $identifiant;
+            $data['nom'] = $nom;
+            $data['prenom'] = $prenom;
+            $data['courriel'] = $courriel;
+            $data['Ville'] = $Ville;
+            $data['codepostal'] = $codepostal;
+            $data['telephone'] = $telephone;
+            $this->load->view('templates/header');
+            $this->load->view('users',$data);
+            }
+            else{
+                $this->load->view('templates/header');
+                $this->load->view('users',$data);
+            }
+        }
+        else{
+            $this->load->view('templates/header');
+            $this->load->view('users');
+        }
+    }
+    public function replacepassword(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('old_mdp', 'Ancien mot de passe', 'required',
+            array('required' =>'Votre mot de passe est obligatoire')
+        );
+        $this->form_validation->set_rules('new_mdp', 'Mot de passe', 'required',
+            array('required' => 'Un mot de passe est obligatoire')
+        );
+        $this->form_validation->set_rules('new_mdp_comfirm', 'Mot de passe', 'required',
+            array('required' => 'La comfirmation du mot de passe est obligatoire')
+        );
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('templates/header');
+            $this->load->view('replacepassword'); //Redirige la personne au formulaire car une erreur a été trouvé
+        }
+        else
+        {
+            $verif = $this->users_model->replacepassword();
+            if($verif){
+                $this->load->view('templates/header');
+                $this->load->view('replacepassword');
+            }
+            if(!$verif){
+                $data['error'] = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Erreur</strong> </div>';
+                $this->load->view('templates/header');
+                $this->load->view('replacepassword',$data);
+                
+            }
+             
+        }
     }
 }

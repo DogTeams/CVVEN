@@ -4,7 +4,12 @@
     </head>
     <body>
         <div class="container">
-            <?php echo validation_errors(); ?>
+            <?php 
+            echo validation_errors(); 
+            if(isset($error)){
+                echo $error;
+            }
+            ?>
             <?php echo form_open('Formulaire/connexion'); ?>
             <table>
                 <tr>
