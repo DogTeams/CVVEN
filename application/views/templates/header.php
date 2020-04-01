@@ -30,7 +30,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links-->
-            <?php if(!isset($_SESSION['co'])){
+            <?php if(!isset($_SESSION['id'])){
                 ?>
             <li class="nav-item active">
                 <a class="nav-link" href="/codeigniter/index.php/Formulaire/inscription">Inscription<span class="sr-only">(current)</span></a>
@@ -40,6 +40,16 @@
             </li>
             <?php }
             else{
+                if($_SESSION['admin']){
+            ?>
+            <li class="nav-item active">
+                <a href="/codeigniter/index.php/Formulaire/adminRes" class="nav-link">Gestion Reservation</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/codeigniter/index.php/Formulaire/" class="nav-link">Gestion Utilisateur</a>
+            </li>
+            <?php
+                }
             ?>
             <li class="nav-item active">
                 <a href="/codeigniter/index.php/Formulaire/users" class="nav-link">Mon Compte</a>

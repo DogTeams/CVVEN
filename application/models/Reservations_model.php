@@ -2,10 +2,19 @@
 class reservations_model extends CI_Model {
     public $datedebut;
     public $datefin;
+    public $tarif;
+    public $etatres;
     public $idclient;
     public $nbclient;
+    public $idtypeheb;
+    public $idheb;
 
-
+    public function __construct(){
+        $this->tarif = null;
+        $this->etatres = 0;
+        $this->idtypeheb = null;
+        $this->idheb = null;
+    }
     public function insertReserv()
     {
         $this->datedebut = $_POST['date'];
@@ -13,8 +22,21 @@ class reservations_model extends CI_Model {
         $this->idclient = $_POST['id'];
         $this->nbclient = $_POST['nbPersonne'];
         $this->db->insert('reservation',$this);
-        
     }  
+    public function getRes($id){
+        $query = $this->db->query('SELECT * FROM reservation WHERE idres = '.$id);
+        foreach($query->result() as $res){
+            $this->datedebut = $res->datedebut;
+            $this->datefin = $res->datefin;
+            $this->tarif = $res->tarif;
+            $this->etatres = $res->etatres;
+            $this->idclient = $res->idclient;
+            $this->nbclient = $res->nbclient;
+            $this->idtypeheb = $res->idtypeheb;
+            $this->idheb = $res->idheb;
+        }
+        return $query->result();
+    }
     public function list($id){
         $query = $this->db->query('SELECT * FROM reservation WHERE idclient = '.$id);
         return $query->result();
@@ -24,6 +46,39 @@ class reservations_model extends CI_Model {
     }
     public function annulation(){
         $this->db->delete('reservation', array('idres' => $_POST['id']));
+    }
+    public function listAll(){
+        if($_SESSION['admin']){
+            $query = $this->db->query('SELECT * FROM reservation, client where reservation.idclient = client.idclient');
+            return $query->result();
+        }
+        else{
+            return false;
+        }
+    }
+    public function validation($id){
+        if($_SESSION['admin']){
+            $this->getRes($id);
+            $this->etatres = 1;
+            $this->db->update('reservation',$this,'idres ='.$id);
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    public function update($id){
+        if($_SESSION['admin']){
+            $this->getRes($id);
+            $this->datedebut = $_POST['datedebut'];
+            
+            $this->etatres = 1;
+            $this->db->update('reservation',$this,'idres ='.$id);
+        }
+        else{
+            return false;
+        }
     }
 }
 

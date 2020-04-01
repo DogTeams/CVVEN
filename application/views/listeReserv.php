@@ -1,5 +1,5 @@
 <?php 
-if(isset($_SESSION['co'])){
+if(isset($_SESSION['id'])){
     if(isset($idres)){
 ?>
     <table class="table">
@@ -16,7 +16,7 @@ if(isset($_SESSION['co'])){
             case 1: 
                 echo"<td>Valider</td>"; 
             break; 
-            case 3: 
+            case 2: 
                 echo"<td>Non disponible</td>"; 
             break;}
         echo'<td>'.$nbclient[$i].'</td>';

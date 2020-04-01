@@ -95,7 +95,7 @@ class Formulaire extends CI_Controller {
         }
     }
     public function logout(){
-        $_SESSION['co'] = null;
+        $_SESSION['id'] = null;
         $this->session->sess_destroy();
         $this->load->view('templates/header');
         $this->load->view('connexion');
@@ -154,7 +154,7 @@ class Formulaire extends CI_Controller {
             }
             else{
                 $this->load->view('templates/header');
-                $this->load->view('listeReserv',$data);
+                $this->load->view('listeReserv');
             }
         }
         else{
@@ -172,7 +172,7 @@ class Formulaire extends CI_Controller {
                 $nom = $res->nom;
                 $prenom = $res->prenom;
                 $courriel = $res->courriel;
-                $Ville = $res->Ville;
+                $ville = $res->ville;
                 $codepostal = $res->codepostal;
                 $telephone = $res->telephone;
             }
@@ -181,7 +181,7 @@ class Formulaire extends CI_Controller {
             $data['nom'] = $nom;
             $data['prenom'] = $prenom;
             $data['courriel'] = $courriel;
-            $data['Ville'] = $Ville;
+            $data['ville'] = $ville;
             $data['codepostal'] = $codepostal;
             $data['telephone'] = $telephone;
             $this->load->view('templates/header');
@@ -215,7 +215,7 @@ class Formulaire extends CI_Controller {
         }
         else
         {
-            $verif = $this->users_model->replacepassword();
+            $verif = $this->users_model->replacepassword($_SESSION['id']);
             if($verif){
                 $this->load->view('templates/header');
                 $this->load->view('replacepassword');
@@ -229,5 +229,82 @@ class Formulaire extends CI_Controller {
             }
              
         }
+    }
+    public function adminRes(){
+        if(isset($_SESSION['id'])){
+            if(isset($_SESSION['admin'])){
+                if(($query = $this->reservations_model->listAll())!=null){
+                foreach($query as $res){
+                    $idclient[] = $res->idclient;
+                    $prenom[] = $res->prenom;
+                    $nom[] = $res->nom;
+                    $idres[] = $res->idres;
+                    $datedebut[] = $res->datedebut;
+                    $datefin[] = $res->datefin;
+                    $tarif[] = $res->tarif;
+                    $etatres[] = $res->etatres;
+                    $nbclient[] = $res->nbclient;
+                }
+                $data['idclient'] = $idclient;
+                $data['prenom'] = $prenom;
+                $data['nom'] = $nom;
+                $data['idres'] = $idres;
+                $data['datedebut'] = $datedebut;
+                $data['datefin'] = $datefin;
+                $data['tarif'] = $tarif;
+                $data['etatres'] = $etatres;
+                $data['nbclient'] = $nbclient;
+                $this->load->view('templates/header');
+                $this->load->view('admin/reservation',$data);
+                }
+                else{
+                    $this->load->view('templates/header');
+                    $this->load->view('admin/reservation');
+                }
+            }
+            else{
+                $this->load->view('templates/header');
+                $this->load->view('admin/reservation');
+            }
+        }
+    }
+    public function validationRes(){
+        $this->reservations_model->validation($_POST['id']);
+        $this->adminRes();
+    }
+    public function modificationRes(){
+        if(isset($_SESSION['id'])){
+            if(isset($_SESSION['admin'])){
+                if(($query = $this->reservations_model->getRes($_POST['id']))!=null){
+                foreach($query as $res){
+                    $idres = $res->idres;
+                    $datedebut = $res->datedebut;
+                    $datefin = $res->datefin;
+                    $tarif = $res->tarif;
+                    $etatres = $res->etatres;
+                    $nbclient = $res->nbclient;
+                }
+                $data['idres'] = $idres;
+                $data['datedebut'] = $datedebut;
+                $data['datefin'] = $datefin;
+                $data['tarif'] = $tarif;
+                $data['etatres'] = $etatres;
+                $data['nbclient'] = $nbclient;
+                $this->load->view('templates/header');
+                $this->load->view('admin/modification',$data);
+                }
+                else{
+                    $this->load->view('templates/header');
+                    $this->load->view('admin/modification');
+                }
+            }
+            else{
+                $this->load->view('templates/header');
+                $this->load->view('admin/modification');
+            }
+        }
+    }
+    public function updateRes(){
+
     }
 }

@@ -1,5 +1,5 @@
 <?php
 
-if(!isset($_SESSION['co'])){
+if(!isset($_SESSION['id'])){
     echo'ERROR: your email or password is incorrect';
 }

@@ -5,9 +5,10 @@ class users_model extends CI_Model {
     public $prenom;
     public $courriel;
     public $mdp;
-    public $Ville;
+    public $ville;
     public $codepostal;
     public $telephone;
+    public $isadmin;
 
     public function insertUser()
     {
@@ -16,9 +17,10 @@ class users_model extends CI_Model {
         $this->prenom = $_POST['prenom'];
         $this->courriel = $_POST['email'];
         $this->mdp = $this->verifMdp($_POST['mdp'],$_POST['mdp2']);
-        $this->Ville = $_POST['ville'];
+        $this->ville = $_POST['ville'];
         $this->codepostal = $_POST['cp'];
         $this->telephone = $_POST['telephone'];
+        $this->isadmin  = false;
 
         $this->db->insert('client',$this);
     }  
@@ -30,9 +32,10 @@ class users_model extends CI_Model {
             $this->prenom = $res->prenom;
             $this->courriel = $res->courriel;
             $this->mdp = $res->mdp;
-            $this->Ville = $res->Ville;
+            $this->ville = $res->ville;
             $this->codepostal = $res->codepostal;
             $this->telephone = $res->telephone;
+            $this->isadmin = $res->isadmin;
         }
     }
     public function verifMdp($mdp,$mdp2){
@@ -48,7 +51,12 @@ class users_model extends CI_Model {
             foreach($query->result() as $row){
                 $this->session->set_userdata('id', $row->idclient);
             }
-            $this->session->set_userdata('co', true);
+            if($this->isAdmin($_SESSION['id'])){
+                $this->session->set_userdata('admin', true);
+            }
+            else{
+                $this->session->set_userdata('admin', false);
+            }
             return true;
         }
         else{
@@ -70,5 +78,15 @@ class users_model extends CI_Model {
             else{return false;}
         }
         else{return false;}
+    }
+
+    public function isAdmin($id){
+        $query = $this->getUser($id);
+        if($this->isadmin){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
