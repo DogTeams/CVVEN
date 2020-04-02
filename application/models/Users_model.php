@@ -67,12 +67,12 @@ class users_model extends CI_Model {
         $query = $this->db->query('SELECT * FROM client WHERE idclient = '.$id);
         return $query->result();
     }
-    public function replacepassword($id){
-        $this->getUser($id);
+    public function replacepassword(){
+        $this->getUser($_SESSION['id']);
         if($this->mdp == md5($_POST['old_mdp'])){
             if($this->verifMdp($_POST['new_mdp'],$_POST['new_mdp_comfirm'])){
                 $this->mdp = md5($_POST['new_mdp']);
-                $this->db->update('client', $this, array('idclient' => $id));
+                $this->db->update('client', $this, array('idclient' => $_SESSION['id']));
                 return true;
             }
             else{return false;}

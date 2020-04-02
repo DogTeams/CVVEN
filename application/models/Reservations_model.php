@@ -68,13 +68,15 @@ class reservations_model extends CI_Model {
 
     }
 
-    public function update($id){
+    public function update(){
         if($_SESSION['admin']){
-            $this->getRes($id);
             $this->datedebut = $_POST['datedebut'];
-            
-            $this->etatres = 1;
-            $this->db->update('reservation',$this,'idres ='.$id);
+            $this->datefin = $_POST['datefin'];
+            $this->tarif = $_POST['tarif'];
+            $this->etatres = $_POST['etatres'];
+            $this->idclient = $_POST['idclient'];
+            $this->nbclient = $_POST['nbclient'];
+            $this->db->update('reservation',$this,'idres ='.$_POST['idclient']);
         }
         else{
             return false;

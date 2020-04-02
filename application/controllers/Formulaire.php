@@ -282,6 +282,7 @@ class Formulaire extends CI_Controller {
                     $datefin = $res->datefin;
                     $tarif = $res->tarif;
                     $etatres = $res->etatres;
+                    $idclient = $res->idclient;
                     $nbclient = $res->nbclient;
                 }
                 $data['idres'] = $idres;
@@ -289,6 +290,7 @@ class Formulaire extends CI_Controller {
                 $data['datefin'] = $datefin;
                 $data['tarif'] = $tarif;
                 $data['etatres'] = $etatres;
+                $data['idclient'] = $idclient;
                 $data['nbclient'] = $nbclient;
                 $this->load->view('templates/header');
                 $this->load->view('admin/modification',$data);
@@ -298,13 +300,18 @@ class Formulaire extends CI_Controller {
                     $this->load->view('admin/modification');
                 }
             }
-            else{
-                $this->load->view('templates/header');
-                $this->load->view('admin/modification');
-            }
         }
     }
     public function updateRes(){
-
+        $data = [
+            'datedebut' => $_POST['datedebut'],
+            'datefin' => $_POST['datefin'],
+            'tarif' => $_POST['tarif'],
+            'etatres' => $_POST['etatres'],
+            'idclient' => $_POST['id'],
+            'nbclient' => $_POST['nbclient']
+        ];
+        $this->reservations_model->update($_POST['id'], $data);
+        $this->modificationRes();
     }
 }
