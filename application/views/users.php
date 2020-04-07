@@ -8,7 +8,7 @@ if(isset($_SESSION['id'])){
         </tr>
 <?php
     echo '<tr> <td>'.$identifiant.'</td> 
-    <td>'.form_open('/Formulaire/replacepassword').'
+    <td>'.form_open('/User/replacepassword').'
         <button type="submit" class="btn btn-primary">Changer de mot de passe</button>
         '.form_close().'
     </td> <td>'.$nom.'</td> <td>'.$prenom.'</td> <td>'.$courriel.'</td> <td>'.$ville.'</td> <td>'.$codepostal.'</td> <td>'.$telephone.'</td> </tr> </table>';    

@@ -19,10 +19,10 @@
                 <a class="nav-link" href="/codeigniter/index.php">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/codeigniter/index.php/Formulaire/reserv">Reservation<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/codeigniter/index.php/Reservation/reserv">Reservation<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/codeigniter/index.php/Formulaire/ListeReserv">Liste Reservation<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/codeigniter/index.php/Reservation/ListeReserv">Liste Reservation<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
@@ -33,29 +33,29 @@
             <?php if(!isset($_SESSION['id'])){
                 ?>
             <li class="nav-item active">
-                <a class="nav-link" href="/codeigniter/index.php/Formulaire/inscription">Inscription<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/codeigniter/index.php/User/inscription">Inscription<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/codeigniter/index.php/Formulaire/connexion">Login<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/codeigniter/index.php/User/connexion">Login<span class="sr-only">(current)</span></a>
             </li>
             <?php }
             else{
                 if($_SESSION['admin']){
             ?>
             <li class="nav-item active">
-                <a href="/codeigniter/index.php/Formulaire/adminRes" class="nav-link">Gestion Reservation</a>
+                <a href="/codeigniter/index.php/Reservation/gestionreserv" class="nav-link">Gestion Reservation</a>
             </li>
             <li class="nav-item active">
-                <a href="/codeigniter/index.php/Formulaire/" class="nav-link">Gestion Utilisateur</a>
+                <a href="/codeigniter/index.php/User/" class="nav-link">Gestion Utilisateur</a>
             </li>
             <?php
                 }
             ?>
             <li class="nav-item active">
-                <a href="/codeigniter/index.php/Formulaire/users" class="nav-link">Mon Compte</a>
+                <a href="/codeigniter/index.php/User/users" class="nav-link">Mon Compte</a>
             </li>
             <li class="nav-item active">
-                <a href="/codeigniter/index.php/Formulaire/logout" class="nav-link">Logout</a>
+                <a href="/codeigniter/index.php/User/logout" class="nav-link">Logout</a>
             </li>
             <?php }?>
         </ul>

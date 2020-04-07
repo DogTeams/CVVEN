@@ -10,7 +10,7 @@
                 echo $error;
             }
             ?>
-            <?php echo form_open('Formulaire/connexion'); ?>
+            <?php echo form_open('User/connexion'); ?>
             <table>
                 <tr>
                     <div class="input-group mb-3">

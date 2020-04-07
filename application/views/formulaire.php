@@ -5,7 +5,7 @@
     <body>
         <div class="container">
             <?php echo validation_errors(); ?>
-            <?php echo form_open('Formulaire/inscription'); ?>
+            <?php echo form_open('User/inscription'); ?>
                 <table class="table">
                 <tr>
                     <div class="input-group mb-3">

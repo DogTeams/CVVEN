@@ -76,7 +76,7 @@ class reservations_model extends CI_Model {
             $this->etatres = $_POST['etatres'];
             $this->idclient = $_POST['idclient'];
             $this->nbclient = $_POST['nbclient'];
-            $this->db->update('reservation',$this,'idres ='.$_POST['idclient']);
+            $this->db->update('reservation',$this,'idres ='.$_POST['idres']);
         }
         else{
             return false;

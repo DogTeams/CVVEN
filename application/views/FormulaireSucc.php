@@ -6,7 +6,7 @@
 
 <h3>Votre formulaire à été soumis avec succès !</h3>
 
-<p><?php echo anchor('Formulaire/index', 'Essaye encore!'); ?></p>
+<p><?php echo anchor('User/index', 'Essaye encore!'); ?></p>
 
 </body>
 </html>

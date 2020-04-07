@@ -21,7 +21,7 @@ if(isset($_SESSION['id'])){
                     echo"<td>Non disponible</td>"; 
                 break;}
             echo'<td>'.$nbclient[$i].'</td>';
-                    echo form_open('/Formulaire/validationRes')
+                    echo form_open('/Reservation/validation')
                     .'<td>';
                     switch($etatres[$i]){
                         case 1:
@@ -34,13 +34,13 @@ if(isset($_SESSION['id'])){
                     }
                     echo'</td>'
                     .form_close()
-                    .form_open('/Formulaire/modificationRes')
+                    .form_open('/Reservation/modification')
                     .'<td>'
                         .'<button type="submit" class="btn btn-primary">Modifier</button>'
                         .'<input type="hidden" name="id" value="'.$idres[$i].'"/>'
                     .'</td>'
                     .form_close()
-                    .form_open('/Formulaire/annulation')
+                    .form_open('/Reservation/annulation')
                     .'<td>'
                         .'<button type="submit" class="btn btn-danger">Supprimer</button>'
                         .'<input type="hidden" name="id" value="'.$idres[$i].'"/>'

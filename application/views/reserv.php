@@ -9,7 +9,7 @@ if(isset($_SESSION['id'])){
     <body>
         <div class="container">
             <?php echo validation_errors(); ?>
-            <?php echo form_open('Formulaire/reserv'); ?>
+            <?php echo form_open('Reservation/reserv'); ?>
             <input type="hidden" value="<?php echo $this->session->id; ?>" name="id">
                 <table class="table">
                     <tr>

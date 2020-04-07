@@ -25,7 +25,7 @@ if(isset($_SESSION['id'])){
                 echo'<td><button type="button" class="btn btn-danger" disabled>Annuler</button></td>';
             break;
             default:
-                echo'<td>'.form_open('/Formulaire/annulation')
+                echo'<td>'.form_open('/Reservation/annulation')
                 .'<button type="submit" class="btn btn-danger" >Annuler</button>'
                 .'<input type="hidden" name="id" value="'.$idres[$i].'"/>'
                 .form_close()

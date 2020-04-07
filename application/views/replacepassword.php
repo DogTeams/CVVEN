@@ -10,8 +10,11 @@
             if(isset($error)){
                 echo $error;
             }
+            if(isset($valide)){
+                echo $valide;
+            }
             ?>
-            <?php echo form_open('Formulaire/replacepassword'); ?>
+            <?php echo form_open('User/replacepassword'); ?>
             <table>
                 <tr>
                     <div class="input-group mb-3">

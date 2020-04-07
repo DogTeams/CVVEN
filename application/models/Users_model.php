@@ -1,14 +1,14 @@
 <?php
 class users_model extends CI_Model {
-    public $identifiant;
-    public $nom;
-    public $prenom;
-    public $courriel;
-    public $mdp;
-    public $ville;
-    public $codepostal;
-    public $telephone;
-    public $isadmin;
+    private $identifiant;
+    private $nom;
+    private $prenom;
+    private $courriel;
+    private $mdp;
+    private $ville;
+    private $codepostal;
+    private $telephone;
+    private $isadmin;
 
     public function insertUser()
     {
